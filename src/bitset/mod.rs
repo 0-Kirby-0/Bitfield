@@ -1,10 +1,7 @@
 use core::fmt;
 
-use crate::Byte;
-
 mod interactors;
 mod ops;
-
 
 #[derive(Clone, PartialEq, Eq)]
 pub struct Bitset<const BYTES: usize> {
@@ -30,16 +27,6 @@ impl<const BYTES: usize> Bitset<BYTES> {
     }
     pub fn bytes_mut(&mut self) -> &mut [u8] {
         &mut self.bytes
-    }
-
-    pub fn any(&self) -> bool {
-        self.bytes.iter().any(|&byte| byte != 0)
-    }
-    pub fn all(&self) -> bool {
-        self.bytes.iter().all(|&byte| byte == Byte::MAX)
-    }
-    pub fn none(&self) -> bool {
-        self.bytes.iter().all(|&byte| byte == 0)
     }
 }
 

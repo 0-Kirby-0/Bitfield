@@ -33,16 +33,6 @@ impl<const SETS: usize, const BYTES: usize> Bitfield<SETS, BYTES> {
     pub fn sets_mut(&mut self) -> &mut [Bitset<BYTES>] {
         &mut self.sets
     }
-
-    pub fn any(&self) -> bool {
-        self.sets.iter().any(|set| set.any())
-    }
-    pub fn all(&self) -> bool {
-        self.sets.iter().all(|set| set.all())
-    }
-    pub fn none(&self) -> bool {
-        self.sets.iter().all(|set| set.none())
-    }
 }
 
 impl<const SETS: usize, const BYTES: usize> std::fmt::Debug for Bitfield<SETS, BYTES> {

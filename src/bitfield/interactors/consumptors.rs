@@ -16,6 +16,25 @@ impl<const FIELDS: usize, const BYTES: usize> Bitfield<FIELDS, BYTES> {
 }
 
 impl<const OWN_FIELDS: usize, const OWN_BYTES: usize> Bitfield<OWN_FIELDS, OWN_BYTES> {
+    /// Truncates the bitfield to a given size.
+    ///
+    /// If the target field is larger in any dimension, the new fields are zeroed.
+    ///
+    /// Is the target field is smaller, the excess data is discarded.
+    /// - If you want to panic if the target field is smaller, see `fit_into`.
+    /// - If you want to fallibly fit the bitfield into a smaller one, see `try_fit_into`.
+    pub fn truncate<const OTHER_FIELDS: usize, const OTHER_BYTES: usize>(
+        self,
+    ) -> Bitfield<OTHER_FIELDS, OTHER_BYTES> {
+        let mut out = Bitfield::default();
+        out.sets
+            .iter_mut()
+            .zip(self.sets)
+            .for_each(|(out_set, self_set)| {
+                *out_set = self_set.truncate();
+            });
+        out
+    }
     /// Fits the bitfield into one of a different size.
     ///
     /// If the target field is larger in any dimension, the new bits are zeroed.
@@ -48,31 +67,5 @@ impl<const OWN_FIELDS: usize, const OWN_BYTES: usize> Bitfield<OWN_FIELDS, OWN_B
         } else {
             None
         }
-    }
-
-    /// Truncates the bitfield to a given size.
-    ///
-    /// If the target field is larger in any dimension, the new fields are zeroed.
-    ///
-    /// Is the target field is smaller, the excess data is discarded.
-    /// - If you want to panic if the target field is smaller, see `fit_into`.
-    /// - If you want to fallibly fit the bitfield into a smaller one, see `try_fit_into`.
-    pub fn truncate<const OTHER_FIELDS: usize, const OTHER_BYTES: usize>(
-        self,
-    ) -> Bitfield<OTHER_FIELDS, OTHER_BYTES> {
-        let mut out = Bitfield::default();
-        out.sets
-            .iter_mut()
-            .zip(self.sets)
-            .for_each(|(out_set, self_set)| {
-                out_set
-                    .bytes
-                    .iter_mut()
-                    .zip(self_set.bytes)
-                    .for_each(|(out_byte, self_byte)| {
-                        *out_byte = self_byte;
-                    });
-            });
-        out
     }
 }
