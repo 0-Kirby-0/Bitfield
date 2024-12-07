@@ -1,5 +1,3 @@
-use core::fmt;
-
 mod interactors;
 mod ops;
 
@@ -15,7 +13,7 @@ macro_rules! bitset {
 }
 
 impl<const BYTES: usize> Bitset<BYTES> {
-    const fn capacity(&self) -> usize {
+    pub const fn capacity(&self) -> usize {
         BYTES * 8
     }
     pub const fn bytes_needed_for_bits(bits: usize) -> usize {
@@ -30,7 +28,7 @@ impl<const BYTES: usize> Bitset<BYTES> {
     }
 }
 
-impl<const BYTES: usize> fmt::Debug for Bitset<BYTES> {
+impl<const BYTES: usize> std::fmt::Debug for Bitset<BYTES> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "Bitset<{}> ", BYTES * 8)?;
         for byte in self.bytes.iter().rev() {
