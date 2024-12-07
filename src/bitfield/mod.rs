@@ -4,10 +4,6 @@ mod interactors;
 mod ops;
 mod structured_access;
 
-pub use interactors::*;
-pub use ops::*;
-pub use structured_access::*;
-
 pub struct Bitfield<const SETS: usize, const BYTES: usize> {
     sets: [Bitset<BYTES>; SETS],
 }

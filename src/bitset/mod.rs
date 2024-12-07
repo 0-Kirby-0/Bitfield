@@ -5,8 +5,6 @@ use crate::Byte;
 mod interactors;
 mod ops;
 
-pub use interactors::*;
-pub use ops::*;
 
 #[derive(Clone, PartialEq, Eq)]
 pub struct Bitset<const BYTES: usize> {

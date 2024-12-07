@@ -9,8 +9,3 @@ pub use bitset::Bitset;
 pub use err::BitfieldError;
 
 type Byte = u8;
-
-#[test]
-fn test() {
-    let bit = bitfield!(4, 5);
-}
